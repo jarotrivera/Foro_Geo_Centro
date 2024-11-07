@@ -2,11 +2,12 @@ const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
+  process.env.MYSQLDATABASE || 'railway',
+  process.env.MYSQLUSER || 'root',
+  process.env.MYSQLPASSWORD || '', 
   {
-    host: process.env.DB_HOST,
+    host: process.env.MYSQLHOST || 'mysql.railway.internal',
+    port: process.env.MYSQLPORT || 3306,
     dialect: 'mysql',
     logging: console.log, // Habilitar logging para ver las consultas que se ejecutan (opcional)
   }
