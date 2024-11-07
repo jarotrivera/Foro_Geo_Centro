@@ -38,10 +38,12 @@ app.use('/api/gastos', gastosRoutes);
 app.use('/api/parking', parkingRoutes);
 
 // Sincroniza la base de datos y levanta el servidor
+const PORT = process.env.PORT || 3000;
+
 sequelize.sync({ alter: true }).then(() => {
   console.log('Conexión a la base de datos exitosa');
-  app.listen(3000, () => {
-    console.log('Servidor corriendo en el puerto 3000');
+  app.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
   });
 }).catch((error) => {
   console.error('Error al conectar con la base de datos:', error);
