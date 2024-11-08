@@ -1,8 +1,35 @@
-// controllers/authController.js
 const User = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
+// Función para registrar un usuario
+const register = async (req, res) => {
+  try {
+    const { nombre, email, password, departamento } = req.body;
+
+    // Verificar si el usuario ya existe
+    const existingUser = await User.findOne({ where: { nombre } });
+    if (existingUser) {
+      return res.status(400).json({ message: 'El nombre de usuario ya está en uso' });
+    }
+
+    // Crear un nuevo usuario
+    const newUser = await User.create({
+      nombre,
+      email,
+      password,
+      departamento,
+      role: 'user', // Asigna el rol por defecto como 'user'
+    });
+
+    res.status(201).json({ message: 'Usuario registrado exitosamente', user: newUser });
+  } catch (error) {
+    console.error('Error en el proceso de registro:', error);
+    res.status(500).json({ message: 'Error en el proceso de registro', error });
+  }
+};
+
+// Función para iniciar sesión
 const login = async (req, res) => {
   try {
     const { nombre, password } = req.body;
@@ -33,6 +60,7 @@ const login = async (req, res) => {
   }
 };
 
+// Función para obtener el perfil del usuario
 const getUserProfile = async (req, res) => {
   try {
     const user = await User.findByPk(req.userId, { attributes: ['id', 'nombre', 'email', 'role'] });
@@ -47,4 +75,4 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-module.exports = { login, getUserProfile };
+module.exports = { register, login, getUserProfile };
