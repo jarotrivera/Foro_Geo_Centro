@@ -23,6 +23,6 @@ const Post = sequelize.define('Post', {
   },
 });
 
-Post.belongsTo(User, { foreignKey: 'usuarioId', as: 'PostUser' });
+Post.belongsTo(User, { foreignKey: 'usuarioId', as: 'usuario' });
 
 module.exports = Post;
