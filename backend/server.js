@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require('express'); 
 const cors = require('cors');
 const path = require('path');
 const sequelize = require('./config/db');
@@ -30,22 +30,25 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/gastos', gastosRoutes);
 app.use('/api/parking', parkingRoutes);
 
-// Servir archivos estáticos del frontend
-const frontendPath = path.join(__dirname, '../dist');
-app.use(express.static(frontendPath));
+// Sirve archivos estáticos solo si el entorno es producción
+if (process.env.NODE_ENV === 'production') {
+  const frontendPath = path.join(__dirname, '../dist');
+  app.use(express.static(frontendPath));
 
-// Ruta para manejar todas las demás solicitudes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(frontendPath, 'index.html'));
-});
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(frontendPath, 'index.html'));
+  });
+}
 
 // Sincronizar la base de datos y arrancar el servidor
 const PORT = process.env.PORT || 3000;
-sequelize.sync({ alter: true }).then(() => {
-  console.log('Conexión a la base de datos exitosa');
-  app.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
+sequelize.sync({ alter: true })
+  .then(() => {
+    console.log('Conexión a la base de datos exitosa');
+    app.listen(PORT, () => {
+      console.log(`Servidor corriendo en el puerto ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error('Error al conectar con la base de datos:', error);
   });
-}).catch((error) => {
-  console.error('Error al conectar con la base de datos:', error);
-});
