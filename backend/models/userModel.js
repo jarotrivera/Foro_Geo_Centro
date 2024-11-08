@@ -1,37 +1,35 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
-const Post = require('./postModel');
-const Venta = require('./ventaModel');
+const User = require('./userModel'); // Importa el modelo User
 
-const User = sequelize.define('User', {
-  nombre: {
+// Definir el modelo Venta
+const Venta = sequelize.define('Venta', {
+  titulo: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  password: {
-    type: DataTypes.STRING,
+  descripcion: {
+    type: DataTypes.TEXT,
     allowNull: false,
   },
-  departamento: {
-    type: DataTypes.STRING,
+  precio: {
+    type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
-  role: { 
-    type: DataTypes.STRING,
-    defaultValue: 'user',
-  }
+  foto: {
+    type: DataTypes.TEXT('long'),
+  },
+  usuarioId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'Users', // Importante: usa el nombre correcto de la tabla
+      key: 'id',
+    },
+  },
 });
 
-// Asociaciones
-User.hasMany(Post, { foreignKey: 'usuarioId', as: 'posts' });
-Post.belongsTo(User, { foreignKey: 'usuarioId', as: 'usuario' });
-
+// Definir las asociaciones
 User.hasMany(Venta, { foreignKey: 'usuarioId', as: 'ventas' });
 Venta.belongsTo(User, { foreignKey: 'usuarioId', as: 'usuarioVenta' });
 
-module.exports = User;
+module.exports = Venta;
