@@ -8,7 +8,7 @@ const Post = sequelize.define('Post', {
     allowNull: false,
   },
   foto: {
-    type: DataTypes.TEXT('long'), 
+    type: DataTypes.TEXT('long'),
   },
   descripcion: {
     type: DataTypes.TEXT,
@@ -20,11 +20,7 @@ const Post = sequelize.define('Post', {
       key: 'id',
     },
   },
-}, {
-  tableName: 'Post', // Asegúrate de usar el nombre correcto de la tabla
-  freezeTableName: true,
 });
 
-Post.belongsTo(User, { foreignKey: 'usuarioId', as: 'usuario' });
-
+Post.belongsTo(User, { foreignKey: 'usuarioId', as: 'PostUser' });
 module.exports = Post;

@@ -8,8 +8,8 @@ const getPosts = async (req, res) => {
     const posts = await Post.findAll({
       include: {
         model: User,
-        as: 'PostUser', // Ajustar el alias al definido en el modelo
-        attributes: ['nombre', 'departamento'], // Incluye nombre y departamento
+        as: 'PostUser', // Alias correcto
+        attributes: ['nombre', 'departamento'],
       },
     });
 
@@ -40,8 +40,8 @@ const getUserPosts = async (req, res) => {
       where: { usuarioId },
       include: {
         model: User,
-        as: 'PostUser', // Ajustar el alias al definido en el modelo
-        attributes: ['nombre', 'departamento'], // Incluye nombre y departamento
+        as: 'PostUser', // Alias correcto
+        attributes: ['nombre', 'departamento'],
       },
     });
 
@@ -72,10 +72,10 @@ const createPost = async (req, res) => {
     let resizedImageBase64 = foto;
 
     if (foto) {
-      const buffer = Buffer.from(foto.split(",")[1], 'base64'); 
+      const buffer = Buffer.from(foto.split(",")[1], 'base64');
       const resizedImage = await sharp(buffer)
-        .resize({ width: 800 }) 
-        .jpeg({ quality: 80 }) 
+        .resize({ width: 800 })
+        .jpeg({ quality: 80 })
         .toBuffer();
       resizedImageBase64 = `data:image/jpeg;base64,${resizedImage.toString('base64')}`;
     }
@@ -86,6 +86,7 @@ const createPost = async (req, res) => {
       descripcion,
       usuarioId,
     });
+
     res.status(201).json({ message: 'Publicación creada exitosamente', newPost });
   } catch (error) {
     console.error('Error al crear la publicación:', error);
