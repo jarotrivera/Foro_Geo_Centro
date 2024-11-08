@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const cors = require('cors');
 const sequelize = require('./config/db');
@@ -17,10 +16,10 @@ const Venta = require('./models/ventaModel');
 
 // Configurar las asociaciones entre los modelos
 User.hasMany(Post, { foreignKey: 'usuarioId', as: 'posts' });
-Post.belongsTo(User, { foreignKey: 'usuarioId', as: 'usuario' });
+Post.belongsTo(User, { foreignKey: 'usuarioId', as: 'usuario', constraints: false });
 
 User.hasMany(Venta, { foreignKey: 'usuarioId', as: 'ventas' });
-Venta.belongsTo(User, { foreignKey: 'usuarioId', as: 'usuarioVenta' });
+Venta.belongsTo(User, { foreignKey: 'usuarioId', as: 'usuarioVenta', constraints: false });
 
 const app = express();
 
@@ -37,14 +36,24 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/gastos', gastosRoutes);
 app.use('/api/parking', parkingRoutes);
 
-// Sincroniza la base de datos y levanta el servidor
-const PORT = process.env.PORT || 3000;
+// Función para inicializar la base de datos sin recrear tablas
+const initializeDatabase = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('Conexión a la base de datos establecida correctamente.');
 
-sequelize.sync().then(() => {
-  console.log('Conexión a la base de datos exitosa');
-  app.listen(PORT, () => {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
-  });
-}).catch((error) => {
-  console.error('Error al conectar con la base de datos:', error);
-});
+    // Puedes descomentar esta línea si necesitas ajustar las tablas manualmente en algún momento:
+    // await sequelize.sync({ alter: true });
+
+    app.listen(PORT, () => {
+      console.log(`Servidor corriendo en el puerto ${PORT}`);
+    });
+  } catch (error) {
+    console.error('Error al conectar con la base de datos:', error);
+    process.exit(1); // Salir de la aplicación en caso de error
+  }
+};
+
+// Inicia la aplicación
+const PORT = process.env.PORT || 3000;
+initializeDatabase();

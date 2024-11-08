@@ -22,8 +22,10 @@ const User = sequelize.define('User', {
   },
   role: { 
     type: DataTypes.STRING,
-    defaultValue: 'user', // 'user' por defecto y 'admin' para administradores
+    defaultValue: 'user',
   }
+}, {
+  freezeTableName: true
 });
 
 User.prototype.validatePassword = async function (password) {

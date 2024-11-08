@@ -21,8 +21,10 @@ const Post = sequelize.define('Post', {
       key: 'id',
     },
   },
+}, {
+  freezeTableName: true
 });
 
-Post.belongsTo(User, { foreignKey: 'usuarioId', as: 'PostUser' });
+Post.belongsTo(User, { foreignKey: 'usuarioId', as: 'PostUser', constraints: false });
 
 module.exports = Post;
