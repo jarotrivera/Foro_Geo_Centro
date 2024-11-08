@@ -1,4 +1,3 @@
-// models/postModel.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 const User = require('./userModel');
@@ -22,9 +21,10 @@ const Post = sequelize.define('Post', {
     },
   },
 }, {
-  freezeTableName: true
+  tableName: 'Post', // Asegúrate de que Sequelize use la tabla 'Post' con mayúscula
+  freezeTableName: true,
 });
 
-Post.belongsTo(User, { foreignKey: 'usuarioId', as: 'PostUser', constraints: false });
+Post.belongsTo(User, { foreignKey: 'usuarioId', as: 'usuario' });
 
 module.exports = Post;
