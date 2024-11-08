@@ -1,8 +1,8 @@
-// models/ventaModel.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
-const User = require('./userModel');
+const User = require('./userModel'); // Asegúrate de que el modelo User esté correctamente importado
 
+// Definir el modelo Venta
 const Venta = sequelize.define('Venta', {
   titulo: {
     type: DataTypes.STRING,
@@ -26,10 +26,10 @@ const Venta = sequelize.define('Venta', {
       key: 'id',
     },
   },
-}, {
-  freezeTableName: true
 });
 
-Venta.belongsTo(User, { foreignKey: 'usuarioId', as: 'VentaUser', constraints: false });
+// Configurar la asociación con el modelo User
+Venta.belongsTo(User, { foreignKey: 'usuarioId', as: 'usuarioVenta' });
+User.hasMany(Venta, { foreignKey: 'usuarioId', as: 'ventas' });
 
 module.exports = Venta;
