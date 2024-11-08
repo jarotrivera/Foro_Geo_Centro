@@ -25,10 +25,11 @@ const User = sequelize.define('User', {
     defaultValue: 'user',
   }
 }, {
-  freezeTableName: true
+  freezeTableName: true, // Esto evitará que Sequelize pluralice el nombre de la tabla
+  tableName: 'users' // Asegura que el nombre de la tabla sea exactamente 'users'
 });
 
-// Método para validar la contraseña (sin `bcrypt`)
+// Método para validar la contraseña
 User.prototype.validatePassword = function (password) {
   return password === this.password;
 };
