@@ -1,9 +1,10 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../config/db');
-const User = require('./userModel'); // Importa el modelo User
+const User = require('./userModel'); // Importar el modelo User
 
-// Definir el modelo Venta
-const Venta = sequelize.define('Venta', {
+class Venta extends Model {}
+
+Venta.init({
   titulo: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -22,14 +23,13 @@ const Venta = sequelize.define('Venta', {
   usuarioId: {
     type: DataTypes.INTEGER,
     references: {
-      model: 'Users', // Importante: usa el nombre correcto de la tabla
+      model: 'Users',
       key: 'id',
     },
   },
+}, {
+  sequelize,
+  modelName: 'Venta',
 });
-
-// Definir las asociaciones
-User.hasMany(Venta, { foreignKey: 'usuarioId', as: 'ventas' });
-Venta.belongsTo(User, { foreignKey: 'usuarioId', as: 'usuarioVenta' });
 
 module.exports = Venta;
