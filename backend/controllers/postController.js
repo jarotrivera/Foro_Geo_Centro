@@ -1,4 +1,3 @@
-// controllers/postController.js
 const Post = require('../models/postModel');
 const User = require('../models/userModel');
 const sharp = require('sharp');
@@ -9,7 +8,7 @@ const getPosts = async (req, res) => {
     const posts = await Post.findAll({
       include: {
         model: User,
-        as: 'Usuario', 
+        as: 'PostUser', // Ajustar el alias al definido en el modelo
         attributes: ['nombre', 'departamento'], // Incluye nombre y departamento
       },
     });
@@ -21,8 +20,8 @@ const getPosts = async (req, res) => {
       descripcion: post.descripcion,
       createdAt: post.createdAt,
       updatedAt: post.updatedAt,
-      usuarioNombre: post.usuario ? post.usuario.nombre : 'Usuario desconocido',
-      departamento: post.usuario ? post.usuario.departamento : 'Sin departamento',
+      usuarioNombre: post.PostUser ? post.PostUser.nombre : 'Usuario desconocido',
+      departamento: post.PostUser ? post.PostUser.departamento : 'Sin departamento',
     }));
 
     res.status(200).json(postsWithUserDetails);
@@ -41,7 +40,7 @@ const getUserPosts = async (req, res) => {
       where: { usuarioId },
       include: {
         model: User,
-        as: 'usuario',
+        as: 'PostUser', // Ajustar el alias al definido en el modelo
         attributes: ['nombre', 'departamento'], // Incluye nombre y departamento
       },
     });
@@ -53,8 +52,8 @@ const getUserPosts = async (req, res) => {
       descripcion: post.descripcion,
       createdAt: post.createdAt,
       updatedAt: post.updatedAt,
-      usuarioNombre: post.usuario ? post.usuario.nombre : 'Usuario desconocido',
-      departamento: post.usuario ? post.usuario.departamento : 'Sin departamento',
+      usuarioNombre: post.PostUser ? post.PostUser.nombre : 'Usuario desconocido',
+      departamento: post.PostUser ? post.PostUser.departamento : 'Sin departamento',
     }));
 
     res.status(200).json(userPosts);

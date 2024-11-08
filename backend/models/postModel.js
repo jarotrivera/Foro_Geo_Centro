@@ -21,7 +21,7 @@ const Post = sequelize.define('Post', {
     },
   },
 }, {
-  tableName: 'Post', // Asegúrate de que Sequelize use la tabla 'Post' con mayúscula
+  tableName: 'Post', // Asegúrate de usar el nombre correcto de la tabla
   freezeTableName: true,
 });
 

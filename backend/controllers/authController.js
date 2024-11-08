@@ -26,28 +26,27 @@ const register = async (req, res) => {
 // Controlador para el login
 const login = async (req, res) => {
   const { nombre, password } = req.body;
+
   try {
     const user = await User.findOne({ where: { nombre } });
 
-    if (!user) {
+    if (!user || user.password !== password) {
       return res.status(401).json({ message: 'Credenciales incorrectas' });
     }
 
-    const isPasswordValid = user.validatePassword(password);
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Credenciales incorrectas' });
-    }
+    const token = jwt.sign(
+      { id: user.id, role: user.role }, 
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
 
-    // Generar el token JWT
-    const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-    // Incluir el rol en la respuesta
-    res.json({ token, role: user.role });
+    res.status(200).json({ token, role: user.role });
   } catch (error) {
-    console.error('Error en el proceso de login:', error);
+    console.error("Error en el proceso de login:", error);
     res.status(500).json({ message: 'Error en el proceso de login' });
   }
 };
+
 
 
 module.exports = { register, login };
