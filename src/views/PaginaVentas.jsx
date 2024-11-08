@@ -19,7 +19,7 @@ const PaginaVentas = () => {
   useEffect(() => {
     const fetchVentas = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/ventas', {
+        const response = await fetch('https://forogeocentro-production.up.railway.app/api/ventas', {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         const text = await response.text();
@@ -60,7 +60,7 @@ const PaginaVentas = () => {
     if (!editVentaId) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/api/ventas/${editVentaId}`, {
+      const response = await fetch(`https://forogeocentro-production.up.railway.app/api/ventas/${editVentaId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ const PaginaVentas = () => {
     if (!editVentaId) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/api/ventas/${editVentaId}`, {
+      const response = await fetch(`https://forogeocentro-production.up.railway.app/api/ventas/${editVentaId}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });

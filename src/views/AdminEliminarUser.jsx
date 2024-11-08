@@ -11,7 +11,7 @@ const AdminEliminarUser = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/admin/users', {
+      const response = await fetch('https://forogeocentro-production.up.railway.app/api/admin/users', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -25,7 +25,7 @@ const AdminEliminarUser = () => {
   
   const handleDeleteUser = async (id) => {
     try {
-      await fetch(`http://localhost:3000/api/admin/users/${id}`, { 
+      await fetch(`https://forogeocentro-production.up.railway.app/api/admin/users/${id}`, { 
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

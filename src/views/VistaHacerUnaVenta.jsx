@@ -31,7 +31,7 @@ const VistaHacerUnaVenta = () => {
       };
 
       // Enviar los datos al backend
-      const response = await fetch('http://localhost:3000/api/ventas', {
+      const response = await fetch('https://forogeocentro-production.up.railway.app/api/ventas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

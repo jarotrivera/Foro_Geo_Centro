@@ -23,7 +23,7 @@ const PaginaInicial = () => {
     const fetchPublicaciones = async () => {
       setLoading(true);
       try {
-        const response = await fetch('http://localhost:3000/api/posts', {
+        const response = await fetch('https://forogeocentro-production.up.railway.app/api/posts', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
           },
@@ -81,7 +81,7 @@ const PaginaInicial = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/api/posts/${editPostId}`, {
+      const response = await fetch(`https://forogeocentro-production.up.railway.app/api/posts/${editPostId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -115,7 +115,7 @@ const PaginaInicial = () => {
   const handleDelete = async () => {
     if (editPostId) {
       try {
-        const response = await fetch(`http://localhost:3000/api/posts/${editPostId}`, {
+        const response = await fetch(`https://forogeocentro-production.up.railway.app/api/posts/${editPostId}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,

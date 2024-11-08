@@ -14,7 +14,7 @@ const AdminEliminarPost = () => {
 
   const fetchUsersWithPosts = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/admin/usersWithPosts', {
+      const response = await fetch('https://forogeocentro-production.up.railway.app/api/admin/usersWithPosts', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -36,7 +36,7 @@ const AdminEliminarPost = () => {
 
   const handleDeletePost = async (postId) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/admin/posts/${postId}`, {
+      const response = await fetch(`https://forogeocentro-production.up.railway.app/api/admin/posts/${postId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

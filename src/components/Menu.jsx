@@ -17,7 +17,7 @@ const Sidebar = ({ className = "" }) => {
         const token = localStorage.getItem('token');
         console.log("Token en localStorage:", token);  // Verifica el token almacenado
   
-        const response = await fetch('http://localhost:3000/api/auth/profile', {
+        const response = await fetch('https://forogeocentro-production.up.railway.app/api/auth/profile', {
           headers: { Authorization: `Bearer ${token}` },
         });
   

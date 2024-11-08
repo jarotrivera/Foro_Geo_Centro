@@ -18,7 +18,7 @@ const TusVentas = () => {
     const fetchVentas = async () => {
       setLoading(true);
       try {
-        const response = await fetch('http://localhost:3000/api/ventas/user', {
+        const response = await fetch('https://forogeocentro-production.up.railway.app/api/ventas/user', {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
         });
         if (!response.ok) {

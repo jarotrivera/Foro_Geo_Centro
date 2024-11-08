@@ -38,7 +38,7 @@ const Registro = () => {
     setSuccess("");
 
     try {
-      const response = await fetch("http://localhost:3000/api/users/register", {
+      const response = await fetch("https://forogeocentro-production.up.railway.app/api/users/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

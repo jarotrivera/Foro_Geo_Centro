@@ -9,7 +9,7 @@ const GastosComunes = () => {
   useEffect(() => {
     const fetchGastos = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/gastos');
+        const response = await fetch('https://forogeocentro-production.up.railway.app/api/gastos');
         if (!response.ok) throw new Error('Error al obtener los gastos comunes');
         const data = await response.json();
         setGastos(data);

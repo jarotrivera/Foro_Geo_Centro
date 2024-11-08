@@ -14,7 +14,7 @@ const AdminEliminarVenta = () => {
 
   const fetchUsersWithVentas = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/admin/usersWithVentas', {
+      const response = await fetch('https://forogeocentro-production.up.railway.app/api/admin/usersWithVentas', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -36,7 +36,7 @@ const AdminEliminarVenta = () => {
 
   const handleDeleteVenta = async (ventaId) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/admin/ventas/${ventaId}`, {
+      const response = await fetch(`https://forogeocentro-production.up.railway.app/api/admin/ventas/${ventaId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

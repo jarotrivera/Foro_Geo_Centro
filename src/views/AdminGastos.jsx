@@ -15,7 +15,7 @@ const AdminGastos = () => {
 
   const fetchTablas = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/gastos');
+      const response = await fetch('https://forogeocentro-production.up.railway.app/api/gastos');
       const data = await response.json();
       setTablas(data);
     } catch (error) {
@@ -37,7 +37,7 @@ const AdminGastos = () => {
 
   const handleGuardar = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/gastos/crear', {
+      const response = await fetch('https://forogeocentro-production.up.railway.app/api/gastos/crear', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -74,7 +74,7 @@ const AdminGastos = () => {
 
   const handleDeleteTable = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/api/gastos/${id}`, {
+      const response = await fetch(`https://forogeocentro-production.up.railway.app/api/gastos/${id}`, {
         method: 'DELETE',
       });
       if (response.ok) {

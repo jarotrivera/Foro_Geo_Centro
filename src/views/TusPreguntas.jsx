@@ -17,7 +17,7 @@ const TusPreguntas = () => {
     const fetchPreguntas = async () => {
       setLoading(true);
       try {
-        const response = await fetch('http://localhost:3000/api/posts/user-posts', {
+        const response = await fetch('https://forogeocentro-production.up.railway.app/api/posts/user-posts', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
           },

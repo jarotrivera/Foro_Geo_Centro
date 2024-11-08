@@ -15,7 +15,7 @@ const Estacionamiento = () => {
   // Función para actualizar el estado de los espacios
   const actualizarEstadoEspacios = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/parking');
+      const response = await fetch('https://forogeocentro-production.up.railway.app/api/parking');
       const data = await response.json();
   
       setEspacios(prevEspacios =>
