@@ -28,7 +28,8 @@ const User = sequelize.define('User', {
   freezeTableName: true
 });
 
-User.prototype.validatePassword = async function (password) {
+// Método para validar la contraseña (sin `bcrypt`)
+User.prototype.validatePassword = function (password) {
   return password === this.password;
 };
 
