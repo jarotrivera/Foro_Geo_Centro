@@ -13,31 +13,22 @@ const Sidebar = ({ className = "" }) => {
 
   useEffect(() => {
     const fetchUserRole = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        console.log("Token en localStorage:", token);  // Verifica el token almacenado
-  
-        const response = await fetch('https://forogeocentro-production.up.railway.app/api/auth/profile', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-  
-        // Verificar si la respuesta es JSON o un error HTML
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error("Error en la respuesta:", errorText);
-          return;
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const response = await fetch('https://forogeocentro-production.up.railway.app/api/auth/profile', {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const data = await response.json();
+          setUserRole(data.role);
+        } catch (error) {
+          console.error('Error al obtener el rol del usuario:', error);
         }
-  
-        const data = await response.json();
-        setUserRole(data.role);
-        console.log("Rol del usuario recibido:", data.role);  // Verifica el rol recibido
-      } catch (error) {
-        console.error('Error al obtener el rol del usuario:', error);
       }
     };
-  
     fetchUserRole();
   }, []);
+  
   
 
   const toggleSidebar = () => setIsOpen(!isOpen);

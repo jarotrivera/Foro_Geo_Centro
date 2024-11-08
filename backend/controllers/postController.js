@@ -9,7 +9,7 @@ const getPosts = async (req, res) => {
     const posts = await Post.findAll({
       include: {
         model: User,
-        as: 'usuario', 
+        as: 'PostUser', 
         attributes: ['nombre', 'departamento'], // Incluye nombre y departamento
       },
     });

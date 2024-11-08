@@ -26,7 +26,6 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Enviar los datos al backend
     console.log("Datos enviados:", formData);
 
     try {
@@ -44,9 +43,12 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Almacenar token en localStorage o redirigir al usuario
         console.log("Login exitoso:", data);
-        localStorage.setItem('token', data.token); // Almacenar token en localStorage
+
+        // Almacenar el token y el rol en localStorage
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('role', data.role); // Guardar el rol del usuario
+
         // Redirigir al usuario a la vista 'paginainicial'
         navigate("/paginainicial");
       } else {
