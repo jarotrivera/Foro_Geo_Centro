@@ -11,7 +11,6 @@ const parkingRoutes = require('./routes/parkingRoutes');
 
 const app = express();
 
-// Middlewares
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 
@@ -24,22 +23,14 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/gastos', gastosRoutes);
 app.use('/api/parking', parkingRoutes);
 
-// Ruta base para comprobar que el servidor está funcionando
+// Ruta base para verificar si el servidor está funcionando
 app.get('/', (req, res) => {
   res.status(200).send('Servidor funcionando correctamente');
 });
 
-const PORT = process.env.PORT || 8080;
+// Forzamos a que use siempre el puerto 3000
+const PORT = 3000;
 
-// Conexión a la base de datos y levantamiento del servidor
-sequelize.authenticate()
-  .then(() => {
-    console.log('Conexión a la base de datos establecida correctamente.');
-    app.listen(PORT, () => {
-      console.log(`Servidor corriendo en el puerto ${PORT}`);
-    });
-  })
-  .catch((error) => {
-    console.error('Error al conectar con la base de datos:', error);
-    process.exit(1);
-  });
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
+});
