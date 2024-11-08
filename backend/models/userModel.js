@@ -1,6 +1,7 @@
-// models/userModel.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
+const Post = require('./postModel');
+const Venta = require('./ventaModel');
 
 const User = sequelize.define('User', {
   nombre: {
@@ -22,12 +23,15 @@ const User = sequelize.define('User', {
   },
   role: { 
     type: DataTypes.STRING,
-    defaultValue: 'user', // 'user' por defecto y 'admin' para administradores
+    defaultValue: 'user',
   }
 });
 
-User.prototype.validatePassword = async function (password) {
-  return password === this.password;
-};
+// Asociaciones
+User.hasMany(Post, { foreignKey: 'usuarioId', as: 'posts' });
+Post.belongsTo(User, { foreignKey: 'usuarioId', as: 'usuario' });
+
+User.hasMany(Venta, { foreignKey: 'usuarioId', as: 'ventas' });
+Venta.belongsTo(User, { foreignKey: 'usuarioId', as: 'usuarioVenta' });
 
 module.exports = User;

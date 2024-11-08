@@ -23,9 +23,11 @@ const deleteVenta = async (req, res) => {
       res.status(404).json({ message: 'Venta no encontrada' });
     }
   } catch (error) {
+    console.error('Error al eliminar venta:', error);
     res.status(500).json({ message: 'Error al eliminar venta', error });
   }
 };
+
 // Eliminar publicación
 const deletePost = async (req, res) => {
   try {
@@ -36,10 +38,12 @@ const deletePost = async (req, res) => {
       res.status(404).json({ message: 'Publicación no encontrada' });
     }
   } catch (error) {
+    console.error('Error al eliminar publicación:', error);
     res.status(500).json({ message: 'Error al eliminar publicación', error });
   }
 };
 
+// Eliminar usuario
 const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
@@ -56,6 +60,7 @@ const deleteUser = async (req, res) => {
     res.status(500).json({ message: 'Error interno del servidor' });
   }
 };
+
 // Obtener todas las publicaciones
 const getAllPosts = async (req, res) => {
   try {
@@ -63,7 +68,7 @@ const getAllPosts = async (req, res) => {
       attributes: ['id', 'titulo', 'descripcion', 'createdAt'],
       include: {
         model: User,
-        as: 'usuario', // Usando el alias definido en la relación
+        as: 'usuario', // Usando el alias definido en el modelo
         attributes: ['nombre', 'email'],
       },
     });
@@ -73,6 +78,7 @@ const getAllPosts = async (req, res) => {
     res.status(500).json({ message: 'Error al obtener las publicaciones' });
   }
 };
+
 // Obtener todas las ventas
 const getAllVentas = async (req, res) => {
   try {
@@ -92,7 +98,7 @@ const getUsersWithPosts = async (req, res) => {
       include: [
         {
           model: Post,
-          as: 'posts',
+          as: 'posts', // Asegúrate que coincida con el alias en el modelo
           attributes: ['id', 'titulo', 'descripcion', 'createdAt'],
         },
       ],
@@ -112,7 +118,7 @@ const getUsersWithVentas = async (req, res) => {
       include: [
         {
           model: Venta,
-          as: 'ventas',
+          as: 'ventas', // Asegúrate que coincida con el alias en el modelo
           attributes: ['id', 'titulo', 'descripcion', 'precio', 'createdAt'],
         },
       ],
@@ -124,7 +130,14 @@ const getUsersWithVentas = async (req, res) => {
   }
 };
 
-
-
-
-module.exports = { getAllUsers, deleteVenta, deletePost, deleteUser, getAllPosts, getAllVentas,getUsersWithPosts, getUsersWithVentas };
+// Exportar todas las funciones del controlador
+module.exports = {
+  getAllUsers,
+  deleteVenta,
+  deletePost,
+  deleteUser,
+  getAllPosts,
+  getAllVentas,
+  getUsersWithPosts,
+  getUsersWithVentas,
+};

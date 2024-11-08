@@ -1,4 +1,4 @@
-const express = require('express'); 
+const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const sequelize = require('./config/db');
@@ -7,17 +7,13 @@ const postRoutes = require('./routes/postRoutes');
 const userRoutes = require('./routes/userRoutes');
 const ventaRoutes = require('./routes/ventaRoutes');
 const adminRoutes = require('./routes/adminRoutes');
-const gastosRoutes = require('./routes/gastosRoutes');
-const parkingRoutes = require('./routes/parkingRoutes');
 
-// Importar modelos
 const User = require('./models/userModel');
 const Post = require('./models/postModel');
 const Venta = require('./models/ventaModel');
 
 const app = express();
 
-// Middlewares
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 
@@ -27,14 +23,11 @@ app.use('/api/posts', postRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/ventas', ventaRoutes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/gastos', gastosRoutes);
-app.use('/api/parking', parkingRoutes);
 
-// Sirve archivos estáticos solo si el entorno es producción
+// Sirve archivos estáticos en producción
 if (process.env.NODE_ENV === 'production') {
   const frontendPath = path.join(__dirname, '../dist');
   app.use(express.static(frontendPath));
-
   app.get('*', (req, res) => {
     res.sendFile(path.join(frontendPath, 'index.html'));
   });
