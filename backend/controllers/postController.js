@@ -1,3 +1,4 @@
+// controllers/postController.js
 const Post = require('../models/postModel');
 const User = require('../models/userModel');
 const sharp = require('sharp');
@@ -8,8 +9,8 @@ const getPosts = async (req, res) => {
     const posts = await Post.findAll({
       include: {
         model: User,
-        as: 'PostUser', // Alias correcto
-        attributes: ['nombre', 'departamento'],
+        as: 'usuario', 
+        attributes: ['nombre', 'departamento'], // Incluye nombre y departamento
       },
     });
 
@@ -20,8 +21,8 @@ const getPosts = async (req, res) => {
       descripcion: post.descripcion,
       createdAt: post.createdAt,
       updatedAt: post.updatedAt,
-      usuarioNombre: post.PostUser ? post.PostUser.nombre : 'Usuario desconocido',
-      departamento: post.PostUser ? post.PostUser.departamento : 'Sin departamento',
+      usuarioNombre: post.usuario ? post.usuario.nombre : 'Usuario desconocido',
+      departamento: post.usuario ? post.usuario.departamento : 'Sin departamento',
     }));
 
     res.status(200).json(postsWithUserDetails);
@@ -40,8 +41,8 @@ const getUserPosts = async (req, res) => {
       where: { usuarioId },
       include: {
         model: User,
-        as: 'PostUser', // Alias correcto
-        attributes: ['nombre', 'departamento'],
+        as: 'usuario',
+        attributes: ['nombre', 'departamento'], // Incluye nombre y departamento
       },
     });
 
@@ -52,8 +53,8 @@ const getUserPosts = async (req, res) => {
       descripcion: post.descripcion,
       createdAt: post.createdAt,
       updatedAt: post.updatedAt,
-      usuarioNombre: post.PostUser ? post.PostUser.nombre : 'Usuario desconocido',
-      departamento: post.PostUser ? post.PostUser.departamento : 'Sin departamento',
+      usuarioNombre: post.usuario ? post.usuario.nombre : 'Usuario desconocido',
+      departamento: post.usuario ? post.usuario.departamento : 'Sin departamento',
     }));
 
     res.status(200).json(userPosts);
@@ -72,10 +73,10 @@ const createPost = async (req, res) => {
     let resizedImageBase64 = foto;
 
     if (foto) {
-      const buffer = Buffer.from(foto.split(",")[1], 'base64');
+      const buffer = Buffer.from(foto.split(",")[1], 'base64'); 
       const resizedImage = await sharp(buffer)
-        .resize({ width: 800 })
-        .jpeg({ quality: 80 })
+        .resize({ width: 800 }) 
+        .jpeg({ quality: 80 }) 
         .toBuffer();
       resizedImageBase64 = `data:image/jpeg;base64,${resizedImage.toString('base64')}`;
     }
@@ -86,7 +87,6 @@ const createPost = async (req, res) => {
       descripcion,
       usuarioId,
     });
-
     res.status(201).json({ message: 'Publicación creada exitosamente', newPost });
   } catch (error) {
     console.error('Error al crear la publicación:', error);

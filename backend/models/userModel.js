@@ -1,3 +1,4 @@
+// models/userModel.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 
@@ -19,10 +20,10 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  role: {
+  role: { 
     type: DataTypes.STRING,
-    defaultValue: 'user',
-  },
+    defaultValue: 'user', // 'user' por defecto y 'admin' para administradores
+  }
 });
 
 User.prototype.validatePassword = async function (password) {

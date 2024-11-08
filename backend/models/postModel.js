@@ -1,3 +1,4 @@
+// models/postModel.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 const User = require('./userModel');
@@ -8,7 +9,7 @@ const Post = sequelize.define('Post', {
     allowNull: false,
   },
   foto: {
-    type: DataTypes.TEXT('long'),
+    type: DataTypes.TEXT('long'), 
   },
   descripcion: {
     type: DataTypes.TEXT,
@@ -23,4 +24,5 @@ const Post = sequelize.define('Post', {
 });
 
 Post.belongsTo(User, { foreignKey: 'usuarioId', as: 'PostUser' });
+
 module.exports = Post;
