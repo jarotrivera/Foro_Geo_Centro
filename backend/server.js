@@ -11,6 +11,7 @@ const parkingRoutes = require('./routes/parkingRoutes');
 
 const app = express();
 
+// Middlewares
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 
@@ -23,7 +24,12 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/gastos', gastosRoutes);
 app.use('/api/parking', parkingRoutes);
 
-const PORT = 8080; // Asegúrate de que sea el mismo puerto que configuraste en Railway
+// Ruta base para comprobar que el servidor está funcionando
+app.get('/', (req, res) => {
+  res.status(200).send('Servidor funcionando correctamente');
+});
+
+const PORT = process.env.PORT || 8080;
 
 // Conexión a la base de datos y levantamiento del servidor
 sequelize.authenticate()
