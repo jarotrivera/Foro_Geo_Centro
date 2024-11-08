@@ -24,10 +24,10 @@ const register = async (req, res) => {
 
 // Login de usuario
 const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { nombre, password } = req.body;
 
   try {
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: { nombre } });
 
     if (!user || user.password !== password) {
       return res.status(401).json({ message: 'Credenciales incorrectas' });
