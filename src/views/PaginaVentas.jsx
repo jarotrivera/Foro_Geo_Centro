@@ -16,6 +16,11 @@ const PaginaVentas = () => {
   const [imageModalOpen, setImageModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
 
+  // Función para formatear el precio en pesos chilenos
+  const formatearPrecio = (precio) => {
+    return precio.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  };
+
   useEffect(() => {
     const fetchVentas = async () => {
       try {
@@ -138,7 +143,8 @@ const PaginaVentas = () => {
                       <Typography className="venta-descripcion">
                         {venta.descripcion}
                       </Typography>
-                      <Typography className="venta-precio">Precio: ${venta.precio}</Typography>
+                      {/* Formatear el precio */}
+                      <Typography className="venta-precio">Precio: ${formatearPrecio(venta.precio)}</Typography>
                       {venta.foto && (
                         <div className="venta-imagen">
                           <img src={venta.foto} alt="Producto" />
