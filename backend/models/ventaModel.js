@@ -1,7 +1,7 @@
 // models/ventaModel.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
-const User = require('./userModel');
+
 
 const Venta = sequelize.define('Venta', {
   titulo: {

@@ -3,30 +3,35 @@ const Venta = require('../models/ventaModel');
 const User = require('../models/userModel');
 const sharp = require('sharp');
 
-// Obtener todas las ventas
-// Obtener todas las ventas
 const getVentas = async (req, res) => {
   try {
     const ventas = await Venta.findAll({
       include: {
         model: User,
-        as: 'usuario',
-        attributes: ['nombre', 'departamento'], // Incluye 'departamento'
+        as: 'usuario', // Asegúrate de que coincide con tu alias en associations.js
+        attributes: ['nombre', 'departamento'],
       },
     });
-    const ventasWithUser = ventas.map(venta => ({
-      ...venta.get(),
-      usuarioNombre: venta.VentaUser ? venta.VentaUser.nombre : 'Usuario desconocido',
-      departamento: venta.VentaUser ? venta.VentaUser.departamento : 'No especificado', // Incluye el departamento en la respuesta
-    }));
-    console.log('Ventas obtenidas:', ventasWithUser); // Log para verificar las ventas obtenidas
+
+    const ventasWithUser = ventas.map(venta => {
+      // Verificar si el usuario está presente antes de acceder a sus propiedades
+      const usuarioNombre = venta.usuario ? venta.usuario.nombre : 'Usuario desconocido';
+      const departamento = venta.usuario ? venta.usuario.departamento : 'No especificado';
+
+      return {
+        ...venta.get(),
+        usuarioNombre,
+        departamento,
+      };
+    });
+
+    console.log('Ventas obtenidas:', ventasWithUser); // Log para depurar
     res.status(200).json(ventasWithUser);
   } catch (error) {
     console.error('Error al obtener las ventas:', error);
     res.status(500).json({ message: 'Error al obtener las ventas', error });
   }
 };
-
 
 // Obtener las ventas del usuario autenticado
 const getUserVentas = async (req, res) => {
