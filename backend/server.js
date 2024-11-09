@@ -9,6 +9,7 @@ const ventaRoutes = require('./routes/ventaRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const gastosRoutes = require('./routes/gastosRoutes');
 const parkingRoutes = require('./routes/parkingRoutes');
+require('./associations'); 
 
 // Importar modelos
 const User = require('./models/userModel');
