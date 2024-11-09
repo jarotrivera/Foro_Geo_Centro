@@ -8,7 +8,19 @@ const VistaHacerUnaVenta = () => {
   const [descripcion, setDescripcion] = useState('');
   const [precio, setPrecio] = useState('');
   const [foto, setFoto] = useState(null);
-  const [mensajeExito, setMensajeExito] = useState(''); // Estado para el mensaje de éxito
+  const [mensajeExito, setMensajeExito] = useState('');
+
+  // Función para formatear el precio en pesos chilenos
+  const formatearPrecio = (valor) => {
+    if (!valor) return '';
+    return valor.replace(/\D/g, '') // Eliminar caracteres no numéricos
+                .replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Agregar puntos como separadores de miles
+  };
+
+  const handlePrecioChange = (e) => {
+    const valor = e.target.value;
+    setPrecio(formatearPrecio(valor)); // Formatear el precio al escribir
+  };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -21,12 +33,16 @@ const VistaHacerUnaVenta = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Iniciando envío de la venta...'); // Log inicial
+    console.log('Iniciando envío de la venta...');
+
+    // Remover los puntos para enviar el precio como número al backend
+    const precioNumerico = precio.replace(/\./g, '');
+
     try {
       const nuevaVenta = {
         titulo,
         descripcion,
-        precio,
+        precio: precioNumerico,
         foto,
       };
 
@@ -52,7 +68,7 @@ const VistaHacerUnaVenta = () => {
       setDescripcion('');
       setPrecio('');
       setFoto(null);
-      setMensajeExito('Venta creada con éxito'); // Mensaje de confirmación
+      setMensajeExito('Venta creada con éxito');
 
       // Ocultar el mensaje después de 3 segundos
       setTimeout(() => setMensajeExito(''), 3000);
@@ -89,9 +105,9 @@ const VistaHacerUnaVenta = () => {
                 <div>
                   <label>Precio</label>
                   <input
-                    type="number"
+                    type="text" // Cambiado a "text" para poder formatear el precio
                     value={precio}
-                    onChange={(e) => setPrecio(e.target.value)}
+                    onChange={handlePrecioChange}
                     required
                   />
                 </div>
@@ -106,7 +122,6 @@ const VistaHacerUnaVenta = () => {
                 </div>
                 <button type="submit">Publicar Venta</button>
               </form>
-              {/* Mostrar mensaje de éxito */}
               {mensajeExito && <p className="mensaje-exito">{mensajeExito}</p>}
             </div>
           </div>
@@ -118,4 +133,3 @@ const VistaHacerUnaVenta = () => {
 };
 
 export default VistaHacerUnaVenta;
-
