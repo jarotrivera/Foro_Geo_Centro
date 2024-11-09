@@ -117,7 +117,10 @@ const getUsersWithVentas = async (req, res) => {
         },
       ],
     });
-    res.status(200).json(users);
+
+    // Asegúrate de que `users` sea siempre un arreglo
+    const response = Array.isArray(users) ? users : [];
+    res.status(200).json(response);
   } catch (error) {
     console.error('Error al obtener usuarios con ventas:', error);
     res.status(500).json({ message: 'Error al obtener usuarios con ventas' });
