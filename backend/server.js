@@ -30,6 +30,17 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/gastos', gastosRoutes);
 app.use('/api/parking', parkingRoutes);
 
+// ** Servir el frontend compilado solo en producción **
+if (process.env.NODE_ENV === 'production') {
+  const frontendPath = path.join(__dirname, '../dist');
+  app.use(express.static(frontendPath));
+
+  // Cualquier ruta que no coincida con las rutas API, devolverá el `index.html`
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(frontendPath, 'index.html'));
+  });
+}
+
 // Sincronizar la base de datos y arrancar el servidor
 const PORT = process.env.PORT || 3000;
 sequelize.sync({ alter: true })
