@@ -36,7 +36,7 @@ const getUserVentas = async (req, res) => {
       where: { usuarioId },
       include: {
         model: User,
-        as: 'VentaUser',
+        as: 'usuario',
         attributes: ['nombre', 'departamento'], // Incluye el campo 'departamento'
       },
     });
