@@ -42,18 +42,16 @@ const getUserVentas = async (req, res) => {
       include: {
         model: User,
         as: 'usuario',
-        attributes: ['nombre', 'departamento'], // Incluye el campo 'departamento'
+        attributes: ['nombre', 'departamento'],
       },
     });
 
-    // Mapeo para agregar 'usuarioNombre' y 'departamento' a la respuesta
     const userVentas = ventas.map(venta => ({
       ...venta.get(),
-      usuarioNombre: venta.VentaUser ? venta.VentaUser.nombre : 'Usuario desconocido',
-      departamento: venta.VentaUser ? venta.VentaUser.departamento : 'No especificado',
+      usuarioNombre: venta.usuario ? venta.usuario.nombre : 'Usuario desconocido',
+      departamento: venta.usuario ? venta.usuario.departamento : 'No especificado',
     }));
 
-    console.log('Ventas del usuario obtenidas:', userVentas); // Log para verificar las ventas obtenidas
     res.status(200).json(userVentas);
   } catch (error) {
     console.error('Error al obtener las ventas del usuario:', error);
