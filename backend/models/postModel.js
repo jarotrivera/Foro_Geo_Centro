@@ -1,4 +1,3 @@
-// models/postModel.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 const User = require('./userModel');
@@ -9,7 +8,7 @@ const Post = sequelize.define('Post', {
     allowNull: false,
   },
   foto: {
-    type: DataTypes.TEXT('long'), 
+    type: DataTypes.TEXT('long'),
   },
   descripcion: {
     type: DataTypes.TEXT,
@@ -17,15 +16,19 @@ const Post = sequelize.define('Post', {
   usuarioId: {
     type: DataTypes.INTEGER,
     references: {
-      model: User,
+      model: 'Users', // Asegúrate de que coincida con el nombre de la tabla
       key: 'id',
     },
   },
 }, {
-  freezeTableName: true, // Evita que Sequelize cambie el nombre de la tabla
-  tableName: 'Posts', // Asegúrate de que coincida con la tabla en tu base de datos
+  freezeTableName: true,
+  tableName: 'Posts',
 });
 
-Post.belongsTo(User, { foreignKey: 'usuarioId', as: 'usuario' });
+// Asegúrate de que la asociación esté definida después de la definición del modelo.
+setImmediate(() => {
+  const User = require('./userModel');
+  Post.belongsTo(User, { foreignKey: 'usuarioId', as: 'usuario' });
+});
 
 module.exports = Post;
