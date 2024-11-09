@@ -28,7 +28,7 @@ const Venta = sequelize.define('Venta', {
   },
 }, {
   freezeTableName: true,
-  tableName: 'Ventas' // Asegúrate de que coincida con el nombre de tu tabla en la base de datos
+  tableName: 'Venta' // Asegúrate de que coincida con el nombre de tu tabla en la base de datos
 });
 
 // Definir la asociación después de importar User
