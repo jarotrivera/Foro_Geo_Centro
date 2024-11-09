@@ -10,7 +10,7 @@ const getVentas = async (req, res) => {
     const ventas = await Venta.findAll({
       include: {
         model: User,
-        as: 'VentaUser',
+        as: 'usuario',
         attributes: ['nombre', 'departamento'], // Incluye 'departamento'
       },
     });
