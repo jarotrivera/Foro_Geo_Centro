@@ -28,6 +28,7 @@ const User = sequelize.define('User', {
 
 // Definir la asociación aquí
 User.hasMany(Post, { foreignKey: 'usuarioId', as: 'posts' });
+User.hasMany(Venta, { foreignKey: 'usuarioId', as: 'ventas' });
 
 User.prototype.validatePassword = async function (password) {
   return password === this.password;
