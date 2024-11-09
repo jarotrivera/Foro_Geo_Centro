@@ -1,10 +1,8 @@
-const { DataTypes, Model } = require('sequelize');
+// models/userModel.js
+const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
-const Venta = require('./ventaModel'); // Importar el modelo Venta
 
-class User extends Model {}
-
-User.init({
+const User = sequelize.define('User', {
   nombre: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -24,16 +22,9 @@ User.init({
   },
   role: { 
     type: DataTypes.STRING,
-    defaultValue: 'user',
-  },
-}, {
-  sequelize,
-  modelName: 'User',
+    defaultValue: 'user', // 'user' por defecto y 'admin' para administradores
+  }
 });
-
-// Definir asociaciones después de cargar todos los modelos
-User.hasMany(Venta, { foreignKey: 'usuarioId', as: 'ventas' });
-Venta.belongsTo(User, { foreignKey: 'usuarioId', as: 'usuarioVenta' });
 
 User.prototype.validatePassword = async function (password) {
   return password === this.password;

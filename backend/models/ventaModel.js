@@ -1,10 +1,9 @@
-const { DataTypes, Model } = require('sequelize');
+// models/ventaModel.js
+const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
-const User = require('./userModel'); // Importar el modelo User
+const User = require('./userModel');
 
-class Venta extends Model {}
-
-Venta.init({
+const Venta = sequelize.define('Venta', {
   titulo: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -23,13 +22,12 @@ Venta.init({
   usuarioId: {
     type: DataTypes.INTEGER,
     references: {
-      model: 'Users',
+      model: User,
       key: 'id',
     },
   },
-}, {
-  sequelize,
-  modelName: 'Venta',
 });
+
+Venta.belongsTo(User, { foreignKey: 'usuarioId', as: 'VentaUser' });
 
 module.exports = Venta;

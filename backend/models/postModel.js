@@ -1,3 +1,4 @@
+// models/postModel.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 const User = require('./userModel');
@@ -22,5 +23,6 @@ const Post = sequelize.define('Post', {
   },
 });
 
-// Asociación con User ya definida en userModel.js
+Post.belongsTo(User, { foreignKey: 'usuarioId', as: 'PostUser' });
+
 module.exports = Post;
