@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db');
 const Post = require('./postModel'); // Asegúrate de requerir el modelo de Post
+const Venta = require('./ventaModel'); 
 
 const User = sequelize.define('User', {
   nombre: {
