@@ -26,8 +26,12 @@ const Venta = sequelize.define('Venta', {
       key: 'id',
     },
   },
+}, {
+  freezeTableName: true,
+  tableName: 'Venta',
 });
 
 Venta.belongsTo(User, { foreignKey: 'usuarioId', as: 'VentaUser' });
 
 module.exports = Venta;
+

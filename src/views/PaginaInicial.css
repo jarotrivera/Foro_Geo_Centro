@@ -5,15 +5,23 @@
   padding: 0;
   max-width: 80%; /* Reduce el ancho total para permitir más espacio a la derecha */
   margin: 0 auto;
-  overflow-y: auto;
+  overflow-y: scroll;
   max-height: calc(100vh - 100px);
   margin-left: 152px; /* Ajusta para mover el bloque hacia la derecha */
+  scrollbar-width: none; /* Para navegadores basados en Firefox */
+  -ms-overflow-style: none; /* Para Internet Explorer y Edge */
+}
+
+.pagina-inicial-container::-webkit-scrollbar {
+  display: none; /* Para navegadores basados en Webkit (Chrome, Safari, etc.) */
 }
 
 .pagina-inicial-scroll {
   overflow-y: auto;
   max-height: calc(100vh - 150px); /* Ajusta el alto según sea necesario */
   margin-right: 90px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 
@@ -32,6 +40,10 @@
 
 .pagina-inicial-card:hover {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.pagina-inicial-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 /* Encabezado y detalles de la publicación */
